@@ -1,0 +1,94 @@
+@import "./editor/editor-frame.css";
+
+.jsdos-rso {
+  .frame-root {
+    @apply flex flex-col;
+  }
+
+  .frame {
+    @apply absolute left-0 top-0 pl-12 overflow-auto h-full w-96 py-4;
+    background-color: hsl(var(--b3));
+  }
+
+  .frame-md {
+    width: 100% !important;
+  }
+
+  .frame-xs {
+    width: calc(var(--sidebar-width) * 2) !important;
+  }
+
+  .premium-plan-root {
+    @apply bg-white rounded-xl px-4 pt-4 pb-2 w-full;
+  }
+
+  .premium-plan-root.have-premium {
+    @apply bg-green-200;
+  }
+
+  .premium-plan-head {
+    @apply text-blue-400;
+  }
+
+  .premium-plan-cost {
+    @apply text-blue-600 text-5xl;
+  }
+
+  .premium-plan-cost-expl {
+    @apply text-gray-600 ml-4 flex flex-col;
+  }
+
+  .premium-plan-highlight {
+    @apply flex flex-row text-xs items-center py-2 border-b border-b-gray-200;
+    @apply text-gray-600;
+  }
+
+  .premium-plan-root.have-premium .premium-plan-highlight {
+    @apply border-b-green-300;
+  }
+
+  .settings-frame, .prerun-frame {
+    @apply px-6 -mt-2;
+
+    .label {
+      @apply p-0;
+    }
+
+    .label-text {
+      font-size: inherit;
+    }
+
+    .option {
+      @apply w-full justify-between;
+    }
+
+    .slider {
+      .touch {
+        @apply w-40 flex-grow-0;
+      }
+    }
+  }
+
+  .network-frame {
+    @apply w-full;
+
+    .option {
+      @apply w-full;
+    }
+
+    .error {
+      .label-text {
+        @apply text-error;
+      }
+
+      input {
+        border-color: hsl(var(--er) / var(--tw-border-opacity));
+        --tw-border-opacity: 0.1;
+        --tw-bg-opacity: 1;
+        background-color: hsl(var(--er) / var(--tw-bg-opacity));
+        --tw-text-opacity: 1;
+        color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));
+      }
+    }
+  }
+}

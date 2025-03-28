@@ -1,0 +1,30 @@
+.jsdos-rso {
+  @apply h-full;
+  background: hsl(var(--pc));
+
+  .jsdos-fullscreen-workaround {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: black;
+    z-index: 999;
+  }
+}
+
+.jsdos-rso {
+  canvas, .slider, .soft-keyboard {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    -ms-touch-action: none;
+    -ms-content-zooming: none;
+    touch-action: none;
+    outline: none;
+  }
+}
