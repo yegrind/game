@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "build": "^0.1.4",
     "dosbox": "^0.1.0",
     "nipplejs": "^0.10.2",
     "preact": "^10.19.3",

@@ -48,6 +48,7 @@ export interface DosOptions {
     renderAspect: RenderAspect,
     noNetworking: boolean,
     noCloud: boolean,
+    cloudSaves: boolean,
     scaleControls: number,
     mouseSensitivity: number,
     noCursor: boolean,
@@ -81,6 +82,7 @@ export interface DosProps {
     setRenderAspect(aspect: RenderAspect): void;
     setNoNetworking(noNetworking: boolean): void;
     setNoCloud(noCloud: boolean): void;
+    setCloudSaves(cloudSaves: boolean): void;
     setPaused(pause: boolean): void;
     setScaleControls(scaleControls: number): void;
     setMouseSensitivity(mouseSensitivity: number): void;

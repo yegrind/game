@@ -74,6 +74,7 @@
           url: "/doom.jsdos", // Absolute path from root
           
           pathPrefix: "/emulators/",
+          // backend: "dosboxX", // Set DOSBox-X as the backend
           ipxBackend: params.get("ipxBackend"),
           room: params.get("room"),
           // ipx: [{
@@ -94,7 +95,9 @@
           //   host: "backend.make-vm.com:8001",
           // },
           noNetworking: true,
-          // noCloud: true,
+          noCloud: true,
+          cloudSaves: false,
+
           // noCursor: true,
           // softKeyboardLayout: [
           //   "q w e r t",

@@ -157,6 +157,10 @@ export const Dos: DosFn = (element: HTMLDivElement,
         store.dispatch(uiSlice.actions.noCloud(cloud));
     }
 
+    function setCloudSaves(cloudSaves: boolean) {
+        store.dispatch(uiSlice.actions.cloudSaves(cloudSaves));
+    }
+
     function setPaused(paused: boolean) {
         store.dispatch(dosSlice.actions.paused(paused));
     }
@@ -267,6 +271,10 @@ export const Dos: DosFn = (element: HTMLDivElement,
         setNoCloud(options.noCloud);
     }
 
+    if (options.cloudSaves !== undefined) {
+        setCloudSaves(options.cloudSaves);
+    }
+
     if (options.scaleControls !== undefined) {
         setScaleControls(options.scaleControls);
     }
@@ -336,6 +344,7 @@ export const Dos: DosFn = (element: HTMLDivElement,
         setRenderAspect,
         setNoNetworking,
         setNoCloud,
+        setCloudSaves,
         setPaused,
         setScaleControls,
         setMouseSensitivity,
