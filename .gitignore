@@ -23,6 +23,7 @@ dist-ssr
 
 public/emulators
 *.zip
+.vscode/chrome-debug-profile
 
 # Copy of doom.jsdos in public directory
 public/doom.jsdos

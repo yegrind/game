@@ -10,7 +10,15 @@
       "sourceMaps": true,
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/src/*"
-      }
+      },
+      "runtimeArgs": [
+        "--incognito",
+        "--disable-cache",
+        "--disk-cache-size=1",
+        "--media-cache-size=1",
+        "--user-data-dir=${workspaceFolder}/.vscode/chrome-debug-profile"
+      ],
+      "userDataDir": false
     }
   ]
-} 
+} npm ru
