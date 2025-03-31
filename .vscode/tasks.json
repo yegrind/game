@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "clean-public",
+      "type": "shell",
+      "command": "echo 'Cleaning public directory...' && rm -rf ${workspaceFolder}/public && mkdir -p ${workspaceFolder}/public && echo 'Public directory cleaned and recreated.'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "prebuild",
+      "label": "npm: prebuild",
+      "detail": "Run prebuild script to copy emulators and DOOM files",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": ["clean-public"],
+      "problemMatcher": []
+    }
+  ]
+} 

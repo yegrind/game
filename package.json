@@ -20,7 +20,7 @@
   "homepage": "https://js-dos.com",
   "scripts": {
     "dev": "vite",
-    "prebuild": "mkdir -p public/emulators && cp -rv node_modules/emulators/dist/* public/emulators && cp -v doom.jsdos public/ # Copy doom.jsdos to public for build process (not committed to repo)",
+    "prebuild": "mkdir -p public/emulators && cp -rv node_modules/emulators/dist/* public/emulators && cp -v doom.jsdos public/",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

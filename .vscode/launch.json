@@ -18,7 +18,8 @@
         "--media-cache-size=1",
         "--user-data-dir=${workspaceFolder}/.vscode/chrome-debug-profile"
       ],
-      "userDataDir": false
+      "userDataDir": false,
+      "preLaunchTask": "npm: prebuild"
     }
   ]
-} npm ru
+}
