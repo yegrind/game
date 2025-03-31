@@ -1,1 +1,5 @@
-zip -r ./js-dos/doom.jsdos ./DOOMS -x "*.DS_Store" 
+cd DOOMS
+zip -r ./doom.jsdos .
+mv ./doom.jsdos ../doom.jsdos
+cd ..
+
