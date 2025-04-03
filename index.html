@@ -3,13 +3,14 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>js-dos 8.xx</title>
   <style>
     html,
     body {
       width: 100%;
       height: 100%;
+      touch-action: none; /* Prevents default touch behaviors */
     }
   </style>
 </head>
@@ -77,6 +78,7 @@
           // backend: "dosboxX", // Set DOSBox-X as the backend
           ipxBackend: params.get("ipxBackend"),
           room: params.get("room"),
+          autoplay: true, // Enable audio autoplay
           // ipx: [{
           //     name: "my-ipx-server",
           //     host: "wss://some.url",

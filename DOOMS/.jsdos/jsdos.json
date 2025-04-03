@@ -272,78 +272,38 @@
         "controls": [
           {
             "row": 4,
-            "column": 0,
-            "symbol": "w",
-            "type": "Key",
-            "mapTo": [
-              87,
-              65
-            ]
-          },
-          {
-            "row": 4,
             "column": 1,
-            "symbol": "w",
+            "symbol": "↑",
             "type": "Key",
             "mapTo": [
-              87
-            ]
-          },
-          {
-            "row": 4,
-            "column": 2,
-            "symbol": "w",
-            "type": "Key",
-            "mapTo": [
-              87,
-              68
+              265
             ]
           },
           {
             "row": 5,
             "column": 0,
-            "symbol": "a",
+            "symbol": "←",
             "type": "Key",
             "mapTo": [
-              65
+              263
             ]
           },
           {
             "row": 5,
             "column": 2,
-            "symbol": "d",
+            "symbol": "→",
             "type": "Key",
             "mapTo": [
-              68
+              262
             ]
           },
           {
             "row": 6,
             "column": 1,
-            "symbol": "s",
+            "symbol": "↓",
             "type": "Key",
             "mapTo": [
-              83
-            ]
-          },
-          {
-            "row": 6,
-            "column": 0,
-            "symbol": "s",
-            "type": "Key",
-            "mapTo": [
-              83,
-              65
-            ]
-          },
-          {
-            "row": 6,
-            "column": 2,
-            "symbol": "s",
-            "type": "Key",
-            "mapTo": [
-              83,
-              68
+              264
             ]
           },
           {
@@ -396,12 +356,43 @@
             ]
           },
           {
-            "row": 3,
-            "column": 0,
-            "symbol": "F",
+            "row": 4,
+            "column": 2,
+            "symbol": "↑",
             "type": "Key",
             "mapTo": [
-              345
+              265,
+              262
+            ]
+          },
+          {
+            "row": 4,
+            "column": 0,
+            "symbol": "↑",
+            "type": "Key",
+            "mapTo": [
+              265,
+              263
+            ]
+          },
+          {
+            "row": 6,
+            "column": 2,
+            "symbol": "↓",
+            "type": "Key",
+            "mapTo": [
+              264,
+              262
+            ]
+          },
+          {
+            "row": 6,
+            "column": 0,
+            "symbol": "↓",
+            "type": "Key",
+            "mapTo": [
+              264,
+              263
             ]
           }
         ]
@@ -509,30 +500,20 @@
           },
           {
             "row": 4,
-            "column": 0,
-            "symbol": "w",
-            "type": "Key",
-            "mapTo": [
-              87,
-              65
-            ]
-          },
-          {
-            "row": 4,
             "column": 1,
-            "symbol": "w",
+            "symbol": "↑",
             "type": "Key",
             "mapTo": [
-              87
+              265
             ]
           },
           {
             "row": 6,
             "column": 1,
-            "symbol": "s",
+            "symbol": "↓",
             "type": "Key",
             "mapTo": [
-              83
+              264
             ]
           },
           {
@@ -554,36 +535,6 @@
             ]
           },
           {
-            "row": 4,
-            "column": 2,
-            "symbol": "w",
-            "type": "Key",
-            "mapTo": [
-              87,
-              68
-            ]
-          },
-          {
-            "row": 6,
-            "column": 0,
-            "symbol": "s",
-            "type": "Key",
-            "mapTo": [
-              83,
-              65
-            ]
-          },
-          {
-            "row": 6,
-            "column": 2,
-            "symbol": "s",
-            "type": "Key",
-            "mapTo": [
-              83,
-              65
-            ]
-          },
-          {
             "row": 5,
             "column": 1,
             "type": "NippleActivator",
@@ -599,21 +550,52 @@
             ]
           },
           {
-            "row": 5,
-            "column": 8,
-            "symbol": "f",
+            "row": 4,
+            "column": 9,
+            "symbol": "F",
             "type": "Key",
             "mapTo": [
-              345
+              341
             ]
           },
           {
-            "row": 5,
-            "column": 9,
-            "symbol": "rightshift",
+            "row": 4,
+            "column": 2,
+            "symbol": "↑",
             "type": "Key",
             "mapTo": [
-              344
+              265,
+              262
+            ]
+          },
+          {
+            "row": 4,
+            "column": 0,
+            "symbol": "↑",
+            "type": "Key",
+            "mapTo": [
+              265,
+              263
+            ]
+          },
+          {
+            "row": 6,
+            "column": 2,
+            "symbol": "↓",
+            "type": "Key",
+            "mapTo": [
+              264,
+              262
+            ]
+          },
+          {
+            "row": 6,
+            "column": 0,
+            "symbol": "↓",
+            "type": "Key",
+            "mapTo": [
+              264,
+              263
             ]
           }
         ]
