@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>js-dos 8.xx</title>
   <style>
     html,
@@ -17,7 +20,7 @@
 
 <body>
   <div id="app"></div>
-  <script type="module" src="/src/main.tsx">
+  <script type="module" src="./src/main.tsx">
   </script>
   <script>
     const params = new URLSearchParams(location.search);
@@ -72,7 +75,7 @@
           // kiosk: true,
           // background: "https://dos.zone/images/http/original/2X/f/f833b147609640191342f555d70eb07261f53c03.png/0a94af564ab81a14a27d6a67671e5416.webp",
 
-          url: "/doom.jsdos", // Absolute path from root
+          url: "/doom.jsdos?v=1.0.0", // Absolute path from root with version
           
           pathPrefix: "/emulators/",
           // backend: "dosboxX", // Set DOSBox-X as the backend
