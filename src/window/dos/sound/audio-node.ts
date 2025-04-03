@@ -123,8 +123,11 @@ export function audioNode(ci: CommandInterface,
         }
     };
 
-    document.addEventListener("pointerdown", resumeWebAudio, { once: true });
-    document.addEventListener("keydown", resumeWebAudio, { once: true });
+    // Add multiple event listeners to ensure audio starts
+    document.addEventListener("pointerdown", resumeWebAudio);
+    document.addEventListener("keydown", resumeWebAudio);
+    document.addEventListener("touchstart", resumeWebAudio);
+    document.addEventListener("click", resumeWebAudio);
 
     return () => {
         ci.events().onSoundPush(() => {});
@@ -144,5 +147,7 @@ export function audioNode(ci: CommandInterface,
 
         document.removeEventListener("pointerdown", resumeWebAudio);
         document.removeEventListener("keydown", resumeWebAudio);
+        document.removeEventListener("touchstart", resumeWebAudio);
+        document.removeEventListener("click", resumeWebAudio);
     };
 }
