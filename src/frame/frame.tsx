@@ -7,6 +7,7 @@ import { NetworkFrame } from "./network-frame";
 import { SettingsFrame } from "./settings-frame";
 import { StatsFrame } from "./stats-frame";
 import { PreRunFrame } from "./prerun-frame";
+import { HelpFrame } from "./help-frame";
 
 export function Frame(props: {}) {
     const frame = useSelector((state: State) => state.ui.frame);
@@ -26,5 +27,6 @@ export function Frame(props: {}) {
         { frame === "stats" && <StatsFrame /> }
         { frame === "fat-drives" && <FatDrivesFrame /> }
         { frame === "prerun" && <PreRunFrame /> }
+        { frame === "help" && <HelpFrame /> }
     </div>;
 };

@@ -7,6 +7,7 @@ import {
     FatDrivesButton, HddLed,
     SoftKeyboardButton,
     PreRunButton,
+    HelpButton,
 } from "./sidebar-button";
 import { SaveButtons } from "./save-buttons";
 
@@ -22,8 +23,10 @@ export function SideBar(props: {}) {
 
     return <div class="sidebar">
         {window === "run" && <SaveButtons />}
-        {window === "run" && <SoftKeyboardButton />}
+        {/* Keyboard button disabled */}
+        {/* {window === "run" && <SoftKeyboardButton />} */}
         {window === "run" && networking && <NetworkButton />}
+        {window === "run" && <HelpButton />}
         {editor && window === "prerun" && <DosboxConfButton />}
         {editor && window === "prerun" && <FatDrivesButton />}
         {editor && window === "run" && <FsButton />}

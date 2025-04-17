@@ -253,3 +253,61 @@ export function PreRunButton(props: { class?: string }) {
         </svg>
     </SidebarButton>;
 }
+
+export function HelpButton(props: { class?: string }) {
+    const [hasBeenClicked, setHasBeenClicked] = useState<boolean>(false);
+    const frame = useSelector((state: State) => state.ui.frame);
+    const dispatch = useDispatch();
+
+    // When the button is clicked or when the frame changes to help
+    useEffect(() => {
+        if (frame === "help" && !hasBeenClicked) {
+            setHasBeenClicked(true);
+            // Dispatch a custom event to notify other components
+            window.dispatchEvent(new Event("helpButtonClicked"));
+        }
+    }, [frame, hasBeenClicked]);
+
+    function handleClick() {
+        if (frame === "help") {
+            dispatch(uiSlice.actions.frameNone());
+        } else {
+            dispatch(uiSlice.actions.frameHelp());
+            setHasBeenClicked(true);
+            // Dispatch a custom event to notify other components
+            window.dispatchEvent(new Event("helpButtonClicked"));
+        }
+    }
+
+    const pulseClass = !hasBeenClicked ? "custom-pulse" : "";
+    const helpStyleOverride = !hasBeenClicked ? 
+        { color: '#3f8fff', filter: 'drop-shadow(0 0 2px #3f8fff)', marginTop: '80px' } : 
+        { marginTop: '80px' };
+
+    return (
+        <div class="relative">
+            <div 
+                class={`sidebar-button ${frame === "help" ? "sidebar-highlight" : ""} ${pulseClass} ${props.class || ""}`}
+                onClick={handleClick}
+                style={helpStyleOverride}
+                title="Getting Started - Click for help"
+            >
+                {/* Using a "getting started" icon instead of a question mark */}
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="2.0" 
+                    stroke="currentColor" 
+                    class="w-full h-full"
+                >
+                    <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" 
+                    />
+                </svg>
+            </div>
+        </div>
+    );
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { Frame } from "./frame/frame";
 import { SideBar } from "./sidebar/sidebar";
@@ -6,6 +6,103 @@ import { State } from "./store";
 import { uiSlice } from "./store/ui";
 import { Window } from "./window/window";
 import { useT } from "./i18n";
+
+// Component for temporary help prompt pointing to the sidebar help button
+function HelpPrompt() {
+    const [hasBeenClicked, setHasBeenClicked] = useState(false); // Default to false to show initially
+    const [isVisible, setIsVisible] = useState(false);
+    const [sidebarHelpPosition, setSidebarHelpPosition] = useState(165); // Higher initial position
+    
+    // Function to find and set the help button position
+    const updateHelpButtonPosition = () => {
+        // Look for either the custom-pulse class or any help button
+        const helpButton = document.querySelector('[title="Getting Started - Click for help"]');
+        if (helpButton) {
+            const rect = helpButton.getBoundingClientRect();
+            // Use the center of the button, account for the marginTop (80px)
+            setSidebarHelpPosition(rect.top + rect.height/2);
+        }
+    };
+    
+    // Show the prompt after a short delay
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            updateHelpButtonPosition();
+            setIsVisible(true);
+        }, 1500); // Show after 1.5 seconds
+        
+        return () => clearTimeout(timer);
+    }, []);
+    
+    // Update position on resize
+    useEffect(() => {
+        if (isVisible && !hasBeenClicked) {
+            const handleResize = () => {
+                updateHelpButtonPosition();
+            };
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Check position again after DOM may have settled
+            const positionCheck = setTimeout(updateHelpButtonPosition, 500);
+            
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                clearTimeout(positionCheck);
+            };
+        }
+    }, [isVisible, hasBeenClicked]);
+    
+    // Listen for help button clicks
+    useEffect(() => {
+        const handleHelpClick = () => {
+            setHasBeenClicked(true);
+            setIsVisible(false);
+        };
+        
+        // Use a custom event to communicate between components
+        window.addEventListener("helpButtonClicked", handleHelpClick);
+        
+        return () => {
+            window.removeEventListener("helpButtonClicked", handleHelpClick);
+        };
+    }, []);
+    
+    // Close the prompt when clicked
+    const handleClose = () => {
+        setIsVisible(false);
+    };
+    
+    if (hasBeenClicked || !isVisible) return null;
+    
+    return (
+        <div 
+            class="fixed left-16 z-50 animate-fadeIn max-w-xs sm:max-w-sm"
+            style={{ top: `${sidebarHelpPosition}px`, transform: 'translateY(-50%)', marginTop: '0px' }}
+        >
+            <div class="bg-blue-500 text-white p-3 rounded-lg shadow-lg relative">
+                {/* Close button */}
+                <button 
+                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
+                    onClick={handleClose}
+                >
+                    ×
+                </button>
+                
+                {/* Content */}
+                <div class="font-bold mb-1">New to Kanye's Quest?</div>
+                <p class="text-sm">Click this button to learn how to play.</p>
+                
+                {/* Arrow pointing left */}
+                <div class="absolute left-0 top-1/2 transform -translate-x-full -translate-y-1/2 flex">
+                    <svg width="14" height="20" viewBox="0 0 14 20" fill="#3b82f6">
+                        <path d="M0 10L14 0V20Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 let currentWideScreen = uiSlice.getInitialState().wideScreen;
 export function Ui() {
@@ -52,6 +149,7 @@ export function Ui() {
         <SideBar />
         <Toast />
         <UpdateWsWarning />
+        <HelpPrompt />
     </div>;
 };
 

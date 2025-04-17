@@ -12,7 +12,7 @@ export type Theme = typeof ThemeValues[number];
 export type Frame = "none" | "settings" |
     "editor-conf" | "editor-fs" | "network" |
     "stats" | "fat-drives" |
-    "prerun";
+    "prerun" | "help";
 
 const initialState: {
     hidden: boolean,
@@ -102,6 +102,10 @@ export const uiSlice = createSlice({
         },
         framePreRun: (state) => {
             state.frame = "prerun";
+            state.frameXs = false;
+        },
+        frameHelp: (state) => {
+            state.frame = "help";
             state.frameXs = false;
         },
         windowSelect: (state) => {
