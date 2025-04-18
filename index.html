@@ -88,7 +88,7 @@
             url: `/doom.jsdos?v=${Date.now()}`, // Add timestamp to prevent caching
             
             pathPrefix: "/emulators/",
-            // backend: "dosboxX", // Set DOSBox-X as the backend
+            backend: "dosboxX", // Set DOSBox-X as the backend
             ipxBackend: params.get("ipxBackend"),
             room: params.get("room"),
             autoplay: true, // Enable audio autoplay
@@ -112,6 +112,7 @@
             noNetworking: true,
             noCloud: true,
             cloudSaves: false,
+            mouseSensitivity: 0.7,
 
             // noCursor: true,
             // softKeyboardLayout: [
@@ -189,6 +190,7 @@ mouse_emulation=integration
 [dosbox]
 title=Windows 95
 memsize=128
+sensitivity=50
 
 [video]
 vmemsize=8
