@@ -1,44 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>js-dos 8.xx</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        touch-action: none; /* Prevents default touch behaviors */
+      }
+      #exit-message {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        z-index: 9999;
+        border-radius: 5px;
+        display: none;
+        font-family: sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <title>js-dos 8.xx</title>
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      touch-action: none; /* Prevents default touch behaviors */
-    }
-  </style>
-</head>
+  <body>
+    <div id="app"></div>
+    <div id="exit-message">DOOM has exited. You can now close this tab.</div>
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      const params = new URLSearchParams(location.search);
+      document.addEventListener("DOMContentLoaded", () => {
+        // Debug logging for every state transition
+        console.log("DOM Content Loaded");
 
-<body>
-  <div id="app"></div>
-  <script type="module" src="./src/main.tsx">
-  </script>
-  <script>
-    const params = new URLSearchParams(location.search);
-    document.addEventListener("DOMContentLoaded", () => {
-      // Wait for Dos to be defined if needed
-      const waitForDos = (callback) => {
-        if (typeof Dos !== 'undefined') {
-          callback();
-        } else {
-          setTimeout(() => waitForDos(callback), 100);
+        // Make key variables and functions accessible globally
+        window.emulatorStarted = false;
+        window.gameRunning = false;
+
+        // Wait for Dos to be defined if needed
+        const waitForDos = (callback) => {
+          if (typeof Dos !== "undefined") {
+            console.log("Dos object found");
+            callback();
+          } else {
+            console.log("Waiting for Dos...");
+            setTimeout(() => waitForDos(callback), 100);
+          }
+        };
+
+        // Function to show exit message
+        const showExitMessage = () => {
+          console.log("SHOWING EXIT MESSAGE - Stack trace:", new Error().stack);
+          // Only show exit message if the emulator had started and was running
+          if (window.emulatorStarted && window.gameRunning) {
+            console.log("Showing exit message (emulator was running)");
+            document.getElementById("exit-message").style.display = "block";
+            // Also try closing automatically, might work in some browsers
+            try {
+              window.close();
+            } catch (e) {
+              console.log("Auto-close failed, message shown instead");
+            }
+          } else {
+            console.log(
+              "Exit message suppressed - emulator not fully started yet"
+            );
+          }
+        };
+
+        // Make showExitMessage globally accessible
+        window.showExitMessage = showExitMessage;
+
+        // Safe version of showExitMessage that handles pointer locks
+        function safeShowExitMessage() {
+          console.log("Safe show exit message called");
+          // Give a small delay to allow any pointer locks to be released
+          setTimeout(() => {
+            try {
+              // First ensure no pointer locks are active
+              if (document.pointerLockElement) {
+                document.exitPointerLock();
+              }
+
+              // Then show the exit message
+              if (window.showExitMessage) {
+                window.showExitMessage();
+              } else {
+                // Fallback if showExitMessage is not available
+                document.getElementById("exit-message").style.display = "block";
+              }
+            } catch (e) {
+              console.log("Error in exit handler:", e);
+              // Show exit message even if there was an error
+              document.getElementById("exit-message").style.display = "block";
+            }
+          }, 100);
         }
-      };
 
-      waitForDos(() => {
-        /* eslint-disable max-len */
-        /* eslint-enable max-len */
-        const props = Dos(document.getElementById("app"),
-          {
+        // Poll for ExitStatus in the JS runtime environment
+        function startExitDetection() {
+          console.log("Starting exit detection polling");
+
+          // Poll every 500ms to check for ExitStatus
+          const pollInterval = setInterval(() => {
+            try {
+              // Check if the command interface reports exited
+              if (window.ci && window.ci.exited) {
+                console.log("Detected exit via CI exited flag");
+                clearInterval(pollInterval);
+                safeShowExitMessage();
+                return;
+              }
+
+              // Additional check for ExitStatus in the global scope
+              if (window.ci && window.emulatorStarted) {
+                for (const key in window) {
+                  try {
+                    const val = window[key];
+                    if (
+                      val &&
+                      typeof val === "object" &&
+                      val.name === "ExitStatus"
+                    ) {
+                      console.log("Found ExitStatus in global scope:", val);
+                      clearInterval(pollInterval);
+                      safeShowExitMessage();
+                      return;
+                    }
+                  } catch (e) {
+                    // Ignore errors from accessing some properties
+                  }
+                }
+              }
+            } catch (e) {
+              console.log("Error in exit detection poll:", e);
+            }
+          }, 500);
+
+          // Also set a backup exit detector using visibilitychange
+          document.addEventListener("visibilitychange", function () {
+            if (
+              document.visibilityState === "hidden" &&
+              window.emulatorStarted
+            ) {
+              console.log(
+                "Document hidden after emulator started, possible exit"
+              );
+              setTimeout(() => {
+                if (document.visibilityState === "visible") {
+                  console.log("Tab is visible again, not exiting");
+                } else {
+                  console.log("Tab remained hidden, assuming program exit");
+                  safeShowExitMessage();
+                }
+              }, 1000);
+            }
+          });
+        }
+
+        // Simplified termination monitor
+        const startTerminationMonitor = () => {
+          console.log("Starting termination monitor");
+
+          // We'll wait a few seconds before considering the emulator fully started
+          // This prevents false "exit" detection during initialization
+          setTimeout(() => {
+            console.log("Emulator considered fully initialized");
+            window.emulatorStarted = true;
+            window.gameRunning = true;
+          }, 5000);
+        };
+
+        waitForDos(() => {
+          /* eslint-disable max-len */
+          /* eslint-enable max-len */
+          console.log("Initializing Dos...");
+
+          const props = Dos(document.getElementById("app"), {
             // url: "https://cdn.dos.zone/custom/dos/QB45.jsdos", // qbasic7
             // url: decodeURIComponent("https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom_dm.jsdos"),
             // url: decodeURIComponent("https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fhomm2_netbios.jsdos"),
@@ -86,7 +237,7 @@
             // background: "https://dos.zone/images/http/original/2X/f/f833b147609640191342f555d70eb07261f53c03.png/0a94af564ab81a14a27d6a67671e5416.webp",
 
             url: `/doom.jsdos?v=${Date.now()}`, // Add timestamp to prevent caching
-            
+
             pathPrefix: "/emulators/",
             backend: "dosboxX", // Set DOSBox-X as the backend
             ipxBackend: params.get("ipxBackend"),
@@ -135,7 +286,7 @@
             //       "{right}": "→",
             //       "q": "й", "w": "ц", "e": "у", "r": "к", "t": "е",
             //   },
-            // ], 
+            // ],
             // softKeyboardLayout: [
             //   [
             //     [
@@ -150,27 +301,35 @@
             //   ],
             // ],
             // softFullscreen: true,
-            softkeyboardlayout: [
-              [
-                [
-                  "{layout} {up}",
-                ],
-              ],
-              [
-                [
-                  "{layout} {down}",
-                ],
-              ],
-            ],
+            softkeyboardlayout: [[["{layout} {up}"]], [["{layout} {down}"]]],
             // key: "-----",
             onEvent: (event, arg) => {
-              console.log("Event", event, arg);
+              // Log every event for debugging
+              console.log("EVENT RECEIVED:", event, arg);
+
+              // Handle each specific event type
               if (event === "ci-ready") {
                 console.log("js-dos version:", props.getVersion());
                 window.ci = arg;
-                
-                // props.setFrame("network");
-                // props.setFullScreen(true);
+                startTerminationMonitor();
+                startExitDetection();
+              } else if (event === "bnd-play") {
+                console.log("Bundle play - game is starting");
+                window.gameRunning = true;
+              } else if (event === "emulator-started") {
+                console.log("Emulator started");
+                window.emulatorStarted = true;
+              }
+              // The real terminal exit events - only trigger exit message if game was running
+              else if (
+                (event === "exit" ||
+                  event === "dosbox-exit" ||
+                  event === "emulator-stopped") &&
+                window.emulatorStarted &&
+                window.gameRunning
+              ) {
+                console.log("GENUINE EXIT EVENT DETECTED:", event);
+                showExitMessage();
               }
             },
             // renderAspect: "1/1",
@@ -178,11 +337,12 @@
             imageRendering: "smooth",
           });
 
-        window.props = props;
+          window.props = props;
+          console.log("Dos initialization complete");
+        });
       });
-    });
 
-    const diabloConf = `
+      const diabloConf = `
 [sdl]
 autolock=false
 mouse_emulation=integration
@@ -231,7 +391,6 @@ imgmount 2 sockdrive wss://sockdrive.js-dos.com:8001 dos.zone diablo_109_c
 imgmount 3 sockdrive wss://sockdrive.js-dos.com:8001 dos.zone diablo_109_d
 boot c:
 `;
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
