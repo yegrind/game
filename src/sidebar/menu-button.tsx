@@ -5,6 +5,12 @@ import { uiSlice } from "../store/ui";
 import { browserSetFullScreen } from "../host/fullscreen";
 import "./menu.css";
 
+// Define interface for MenuButton props
+interface MenuButtonProps {
+  onClick?: () => void;
+  isActive?: boolean;
+}
+
 // Define window.props interface
 declare global {
   interface Window {
@@ -22,35 +28,121 @@ declare global {
   }
 }
 
-export function MenuButton() {
-  const [menuOpen, setMenuOpen] = useState(false);
+// Preload gradient background
+const preloadGradient = () => {
+  // Create an element to preload the gradient
+  const preloadEl = document.createElement("div");
+  preloadEl.style.position = "absolute";
+  preloadEl.style.opacity = "0.01";
+  preloadEl.style.pointerEvents = "none";
+  preloadEl.style.background =
+    "linear-gradient(to bottom, #aebcce 0%, #8399b8 100%), linear-gradient(to bottom, #c9d5e2 0%, #94aac9 100%)";
+  preloadEl.style.backgroundSize = "100% 50%, 100% 50%";
+  preloadEl.style.backgroundPosition = "top, bottom";
+  preloadEl.style.width = "2px";
+  preloadEl.style.height = "2px";
+  document.body.appendChild(preloadEl);
+
+  // Create an image for Windows logo preloading
+  const preloadWinLogo = document.createElement("div");
+  preloadWinLogo.style.position = "absolute";
+  preloadWinLogo.style.opacity = "0.01";
+  preloadWinLogo.style.pointerEvents = "none";
+  preloadWinLogo.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1" height="1">
+      <rect x="1" y="1" width="10" height="10" fill="#ff0000" />
+      <rect x="13" y="1" width="10" height="10" fill="#00ff00" />
+      <rect x="1" y="13" width="10" height="10" fill="#0000ff" />
+      <rect x="13" y="13" width="10" height="10" fill="#ffff00" />
+    </svg>
+  `;
+  document.body.appendChild(preloadWinLogo);
+
+  // Remove after a short time
+  setTimeout(() => {
+    document.body.removeChild(preloadEl);
+    document.body.removeChild(preloadWinLogo);
+  }, 1500);
+
+  return true;
+};
+
+// Create a single instance of the preload flag
+let gradientPreloaded = false;
+
+export function MenuButton({ onClick, isActive }: MenuButtonProps = {}) {
+  const [menuOpen, setMenuOpen] = useState(isActive || false);
   const [buttonReady, setButtonReady] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
   const store = useStore() as Store;
   const fullScreen = useSelector((state: State) => state.ui.fullScreen);
 
+  // Update menuOpen state when isActive prop changes
+  useEffect(() => {
+    if (isActive !== undefined) {
+      setMenuOpen(isActive);
+    }
+  }, [isActive]);
+
   // Ensure proper button initialization
   useEffect(() => {
-    // Short delay to make sure CSS is fully applied
-    const timer = setTimeout(() => {
-      setButtonReady(true);
-      // Force repaint if needed
+    // Only preload once across all instances
+    if (!gradientPreloaded) {
+      gradientPreloaded = preloadGradient();
+    }
+
+    // Initial styling before the timer completes
+    if (buttonRef.current) {
+      // Set explicit initial styles to prevent flashing
+      buttonRef.current.style.opacity = "0";
+      buttonRef.current.style.visibility = "hidden";
+      buttonRef.current.style.background =
+        "linear-gradient(to bottom, #aebcce 0%, #8399b8 100%)";
+    }
+
+    // Multi-stage initialization for more reliable rendering
+    // Stage 1: Short delay for initial style application
+    const initialTimer = setTimeout(() => {
       if (buttonRef.current) {
+        // Force repaint of background gradient
         const currentDisplay = buttonRef.current.style.display;
         buttonRef.current.style.display = "none";
-        // Trigger reflow
-        void buttonRef.current.offsetHeight;
-        buttonRef.current.style.display = currentDisplay;
+        void buttonRef.current.offsetHeight; // Trigger reflow
+        buttonRef.current.style.display = currentDisplay || "flex";
       }
     }, 50);
 
-    return () => clearTimeout(timer);
+    // Stage 2: Main initialization with longer delay
+    const mainTimer = setTimeout(() => {
+      setButtonReady(true);
+
+      // Apply final visibility after state is updated
+      if (buttonRef.current) {
+        requestAnimationFrame(() => {
+          if (buttonRef.current) {
+            buttonRef.current.style.visibility = "visible";
+            buttonRef.current.style.opacity = "1";
+          }
+        });
+      }
+    }, 200); // Increased from 150ms to 200ms for reliability
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearTimeout(mainTimer);
+    };
   }, []);
 
   // Toggle menu open/closed
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    const newState = !menuOpen;
+    setMenuOpen(newState);
+
+    // Call provided onClick handler if available
+    if (onClick) {
+      onClick();
+    }
   };
 
   // Close menu when clicking outside
@@ -60,19 +152,25 @@ export function MenuButton() {
       (e.target as HTMLElement).closest(".menu-container") === null
     ) {
       setMenuOpen(false);
+
+      // Call provided onClick handler to sync parent state if available
+      if (onClick && isActive) {
+        onClick();
+      }
     }
   };
 
   // Add/remove event listener when menu opens/closes
   useEffect(() => {
-    if (menuOpen) {
+    // Only handle click outside events if we're controlling our own state
+    if (isActive === undefined && menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [menuOpen]);
+  }, [menuOpen, isActive]);
 
   // Help button handler
   const handleHelpClick = () => {
@@ -80,12 +178,22 @@ export function MenuButton() {
       window.openHelpModal();
     }
     setMenuOpen(false);
+
+    // Call provided onClick handler to sync parent state if available
+    if (onClick && isActive) {
+      onClick();
+    }
   };
 
   // Fullscreen button handler
   const handleFullscreenClick = () => {
     browserSetFullScreen(!fullScreen, store);
     setMenuOpen(false);
+
+    // Call provided onClick handler to sync parent state if available
+    if (onClick && isActive) {
+      onClick();
+    }
   };
 
   // Settings button handler
@@ -94,6 +202,11 @@ export function MenuButton() {
       window.openSettingsModal();
     }
     setMenuOpen(false);
+
+    // Call provided onClick handler to sync parent state if available
+    if (onClick && isActive) {
+      onClick();
+    }
   };
 
   // Shutdown button handler
@@ -113,6 +226,11 @@ export function MenuButton() {
       if (window.showExitMessage) {
         window.showExitMessage();
         setMenuOpen(false);
+
+        // Call provided onClick handler to sync parent state if available
+        if (onClick && isActive) {
+          onClick();
+        }
         return;
       }
 
@@ -130,7 +248,15 @@ export function MenuButton() {
       console.error("Failed to close window:", e);
     }
     setMenuOpen(false);
+
+    // Call provided onClick handler to sync parent state if available
+    if (onClick && isActive) {
+      onClick();
+    }
   };
+
+  // Use isActive prop if provided, otherwise use internal state
+  const showMenu = isActive !== undefined ? isActive : menuOpen;
 
   return (
     <div class="menu-container">
@@ -139,7 +265,12 @@ export function MenuButton() {
         onClick={toggleMenu}
         class={`start-button ${buttonReady ? "menu-mounted" : "menu-hidden"}`}
         title="Start"
-        style={{ visibility: buttonReady ? "visible" : "hidden" }}
+        style={{
+          opacity: 0, // Start completely hidden
+          visibility: "hidden", // Ensure initially hidden
+          background: "linear-gradient(to bottom, #aebcce 0%, #8399b8 100%)",
+          transition: "opacity 0.3s ease", // Smoother transition
+        }}
       >
         <svg
           class="windows-logo"
@@ -156,7 +287,7 @@ export function MenuButton() {
         <span>Start</span>
       </button>
 
-      {menuOpen && (
+      {showMenu && (
         <div class="menu-popup">
           <div class="menu-item" onClick={handleHelpClick}>
             <div class="menu-icon">
