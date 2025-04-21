@@ -5,12 +5,20 @@
   z-index: 100;
 }
 
+.menu-hidden {
+  opacity: 0;
+}
+
+.menu-mounted {
+  opacity: 1;
+}
+
 /* Windows Start Button Styling */
 .start-button {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(to bottom, #aebcce 0%, #8399b8 100%);
+  background: linear-gradient(to bottom, #aebcce 0%, #8399b8 100%) !important;
   border: 2px solid;
   border-color: #fff #24292f #24292f #fff;
   border-radius: 0;
@@ -28,11 +36,11 @@
 }
 
 .start-button:hover {
-  background: linear-gradient(to bottom, #b8c7db 0%, #8ea6c8 100%);
+  background: linear-gradient(to bottom, #b8c7db 0%, #8ea6c8 100%) !important;
 }
 
 .start-button:active {
-  background: linear-gradient(to bottom, #7993b4 0%, #8ea6c8 100%);
+  background: linear-gradient(to bottom, #7993b4 0%, #8ea6c8 100%) !important;
   border-color: #24292f #fff #fff #24292f;
   box-shadow: inset -1px -1px 0px rgba(255, 255, 255, 0.6),
     inset 1px 1px 0px rgba(0, 0, 0, 0.2);
