@@ -3,7 +3,7 @@
     @apply overflow-hidden;
 
     .background-image {
-      @apply absolute left-12 right-0 h-full pointer-events-none;
+      @apply absolute left-0 right-0 h-full pointer-events-none;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -13,7 +13,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        background-color: hsl(var(--b1)/var(--tw-bg-opacity));
+        background-color: hsl(var(--b1) / var(--tw-bg-opacity));
         opacity: 0.75;
       }
     }
@@ -51,7 +51,6 @@
         div:last-child {
           @apply text-yellow-300;
         }
-
       }
     }
 

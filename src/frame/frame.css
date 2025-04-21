@@ -6,7 +6,7 @@
   }
 
   .frame {
-    @apply absolute left-0 top-0 pl-12 overflow-auto h-full w-96 py-4;
+    @apply absolute right-0 top-0 overflow-auto h-full w-96 py-4 px-4;
     background-color: hsl(var(--b3));
   }
 
@@ -15,7 +15,7 @@
   }
 
   .frame-xs {
-    width: calc(var(--sidebar-width) * 2) !important;
+    width: 240px !important;
   }
 
   .premium-plan-root {
@@ -47,7 +47,8 @@
     @apply border-b-green-300;
   }
 
-  .settings-frame, .prerun-frame {
+  .settings-frame,
+  .prerun-frame {
     @apply px-6 -mt-2;
 
     .label {

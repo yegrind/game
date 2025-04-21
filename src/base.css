@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    --sidebar-width: 3rem;
-    /* w-12 */
+    /* Add any global CSS variables here */
   }
 }
