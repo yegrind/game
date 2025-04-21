@@ -2,7 +2,7 @@
   position: absolute;
   bottom: 15px;
   left: 15px;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .menu-hidden {
@@ -135,6 +135,7 @@
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
   min-width: 180px;
   animation: slideUp 0.15s ease-out;
+  z-index: 1000;
 }
 
 @keyframes slideUp {
@@ -157,7 +158,7 @@
   width: 25px;
   height: 100%;
   background: #000080;
-  z-index: 0;
+  z-index: 1000;
 }
 
 .menu-item {
@@ -167,7 +168,7 @@
   padding: 6px 8px 6px 30px;
   transition: background-color 0.1s ease;
   cursor: pointer;
-  z-index: 1;
+  z-index: 1001;
   font-family: "Arial", sans-serif;
   font-size: 12px;
   margin: 1px 0;

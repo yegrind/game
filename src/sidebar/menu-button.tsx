@@ -5,11 +5,16 @@ import { uiSlice } from "../store/ui";
 import { browserSetFullScreen } from "../host/fullscreen";
 import "./menu.css";
 
-// Add global window property declarations
+// Define window.props interface
 declare global {
   interface Window {
     openHelpModal?: () => void;
     openSettingsModal?: () => void;
+    props?: {
+      stop?: () => void;
+      getVersion?: () => string;
+      [key: string]: any;
+    };
     showExitMessage?: () => void;
     ci?: any;
     emulatorStarted?: boolean;
@@ -74,14 +79,27 @@ export function MenuButton() {
   // Shutdown button handler
   const handleShutdownClick = () => {
     try {
-      // Attempt to call window.close() directly
-      window.close();
+      // Try to stop the emulator if props is available
+      if (window.props && typeof window.props.stop === "function") {
+        try {
+          console.log("Stopping emulator with props.stop()");
+          window.props.stop();
+        } catch (e) {
+          console.error("Error stopping emulator:", e);
+        }
+      }
 
-      // If we're still here, try alternative methods
-      // Show the exit message if it exists
+      // If we have showExitMessage function available, use it
       if (window.showExitMessage) {
         window.showExitMessage();
+        setMenuOpen(false);
+        return;
       }
+
+      // Fallbacks if showExitMessage is not available
+
+      // Attempt to call window.close() directly
+      window.close();
 
       // If we have access to the exit message element directly
       const exitMessage = document.getElementById("exit-message");

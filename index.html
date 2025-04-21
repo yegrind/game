@@ -68,6 +68,17 @@
           if (window.emulatorStarted && window.gameRunning) {
             console.log("Showing exit message (emulator was running)");
             document.getElementById("exit-message").style.display = "block";
+
+            // Stop the emulator properly if props exists
+            if (window.props && typeof window.props.stop === "function") {
+              try {
+                console.log("Stopping emulator with props.stop()");
+                window.props.stop();
+              } catch (e) {
+                console.log("Error stopping emulator:", e);
+              }
+            }
+
             // Also try closing automatically, might work in some browsers
             try {
               window.close();
