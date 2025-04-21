@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { State, Store } from "../store";
 import { uiSlice } from "../store/ui";
@@ -24,9 +24,29 @@ declare global {
 
 export function MenuButton() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [buttonReady, setButtonReady] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
   const store = useStore() as Store;
   const fullScreen = useSelector((state: State) => state.ui.fullScreen);
+
+  // Ensure proper button initialization
+  useEffect(() => {
+    // Short delay to make sure CSS is fully applied
+    const timer = setTimeout(() => {
+      setButtonReady(true);
+      // Force repaint if needed
+      if (buttonRef.current) {
+        const currentDisplay = buttonRef.current.style.display;
+        buttonRef.current.style.display = "none";
+        // Trigger reflow
+        void buttonRef.current.offsetHeight;
+        buttonRef.current.style.display = currentDisplay;
+      }
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Toggle menu open/closed
   const toggleMenu = () => {
@@ -114,7 +134,13 @@ export function MenuButton() {
 
   return (
     <div class="menu-container">
-      <button onClick={toggleMenu} class="start-button" title="Start">
+      <button
+        ref={buttonRef}
+        onClick={toggleMenu}
+        class={`start-button ${buttonReady ? "menu-mounted" : "menu-hidden"}`}
+        title="Start"
+        style={{ visibility: buttonReady ? "visible" : "hidden" }}
+      >
         <svg
           class="windows-logo"
           xmlns="http://www.w3.org/2000/svg"

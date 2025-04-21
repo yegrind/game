@@ -347,7 +347,7 @@
             "layerName": "Layer#1"
           },
           {
-            "row": 3,
+            "row": 4,
             "column": 9,
             "symbol": "F",
             "type": "Key",
@@ -394,6 +394,24 @@
               264,
               263
             ]
+          },
+          {
+              "row": 0,
+              "column": 3,
+              "symbol": "y",
+              "type": "Key",
+              "mapTo": [
+                  89
+              ]
+          },
+          {
+              "row": 0,
+              "column": 4,
+              "symbol": "n",
+              "type": "Key",
+              "mapTo": [
+                  78
+              ]
           }
         ]
       },
@@ -597,6 +615,24 @@
               264,
               263
             ]
+          },
+          {
+              "row": 0,
+              "column": 3,
+              "symbol": "y",
+              "type": "Key",
+              "mapTo": [
+                  89
+              ]
+          },
+          {
+              "row": 0,
+              "column": 4,
+              "symbol": "n",
+              "type": "Key",
+              "mapTo": [
+                  78
+              ]
           }
         ]
       }
