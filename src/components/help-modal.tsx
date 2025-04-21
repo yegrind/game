@@ -1,62 +1,50 @@
 import { useT } from "../i18n";
+import { useSelector } from "react-redux";
+import { State } from "../store";
+import mobileTopButtonsImg from "../public/images/help/mobileTopButtons.png";
+import mobileBottomButtonsImg from "../public/images/help/mobileBottomButtons.png";
+
+// Mobile device detection based on the existing code in the project
+const isMobileDevice = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(
+  navigator.appVersion
+);
 
 export function HelpModalContent() {
   const t = useT();
+  // Access mobile controls state from Redux store
+  const mobileControls = useSelector(
+    (state: State) => state.dos.mobileControls
+  );
 
-  return (
-    <div className="help-modal-content">
-      <h2
-        className="text-2xl font-bold mb-4"
-        style={{ color: "hsl(var(--p, #570df8))" }}
-      >
-        Getting Started Guide
-      </h2>
+  // Determine if we should show mobile help (either mobile controls enabled or mobile device)
+  const showMobileHelp = mobileControls || isMobileDevice;
 
+  // Common main title
+  const MainTitle = () => (
+    <h1
+      className="text-2xl font-bold mb-4"
+      style={{ color: "hsl(var(--p, #570df8))" }}
+    >
+      How to Play Ye's Grind
+    </h1>
+  );
+
+  // Mobile version of the help content
+  const MobileHelpContent = () => (
+    <>
+      <MainTitle />
       <section className="mt-6">
         <h3
           className="text-xl font-semibold mb-4"
           style={{ color: "hsl(var(--p, #570df8))" }}
         >
-          How to Start the Game
+          Top Mobile Controls
         </h3>
-        <ol className="list-decimal pl-6 mb-6 space-y-3">
-          <li>
-            Press{" "}
-            <span
-              className="font-mono px-1"
-              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-            >
-              Esc
-            </span>{" "}
-            to access the menu. Menu items are navigated with the up/down arrows
-            on your keyboard. Press{" "}
-            <span
-              className="font-mono px-1"
-              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-            >
-              Enter
-            </span>{" "}
-            to select an item in the menu.
-          </li>
-          <li>
-            Select "New Game" and press{" "}
-            <span
-              className="font-mono px-1"
-              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-            >
-              Enter
-            </span>
-            .
-          </li>
-          <li>
-            Select the episode, I recommend starting with "Knee-Deep in the
-            Dead".
-          </li>
-          <li>
-            Select the skill level, I recommend starting with "I'm Too Young to
-            Die".
-          </li>
-        </ol>
+        <img
+          src={mobileTopButtonsImg}
+          alt="Mobile top control buttons"
+          className="w-full rounded-lg mb-4 shadow-md"
+        />
       </section>
 
       <section className="mt-6">
@@ -64,7 +52,70 @@ export function HelpModalContent() {
           className="text-xl font-semibold mb-4"
           style={{ color: "hsl(var(--p, #570df8))" }}
         >
-          Basic Controls
+          Bottom Mobile Controls
+        </h3>
+        <img
+          src={mobileBottomButtonsImg}
+          alt="Mobile bottom control buttons"
+          className="w-full rounded-lg mb-4 shadow-md"
+        />
+      </section>
+
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
+          How to operate in-game menu
+        </h3>
+        <ul className="list-disc pl-6 mb-6 space-y-3">
+          <li>Use Escape key to access in-game menu.</li>
+          <li>Use up/down arrows to make menu selection.</li>
+          <li>Select the menu option.</li>
+        </ul>
+      </section>
+    </>
+  );
+
+  // Desktop version of the help content
+  const DesktopHelpContent = () => (
+    <>
+      <MainTitle />
+
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
+          How to operate in-game menu
+        </h3>
+        <ul className="list-disc pl-6 mb-6 space-y-3">
+          <li>Use Escape key to access in-game menu.</li>
+          <li>Use up/down arrows to make menu selection.</li>
+          <li>Press Enter to select an item in the menu.</li>
+        </ul>
+      </section>
+
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
+          How to play your first game (easy)
+        </h3>
+        <ul className="list-disc pl-6 mb-6 space-y-3">
+          <li>Select "New Game" on the in-game menu.</li>
+          <li>Select "Knee-Deep in the Dead" as the episode.</li>
+          <li>Select "I'm Too Young to Die" skill level.</li>
+        </ul>
+      </section>
+
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
+          Keyboard Controls
         </h3>
         <div className="overflow-x-auto">
           <table
@@ -110,7 +161,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  W or ↑
+                  arrow up ↑
                 </td>
                 <td style={{ padding: "8px 16px" }}>Move forward</td>
               </tr>
@@ -127,7 +178,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  S or ↓
+                  arrow down ↓
                 </td>
                 <td style={{ padding: "8px 16px" }}>Move backward</td>
               </tr>
@@ -145,7 +196,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  A or ←
+                  arrow left ←
                 </td>
                 <td style={{ padding: "8px 16px" }}>Turn left</td>
               </tr>
@@ -162,7 +213,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  D or →
+                  arrow right →
                 </td>
                 <td style={{ padding: "8px 16px" }}>Turn right</td>
               </tr>
@@ -180,7 +231,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Ctrl or LMB
+                  Ctrl or left-mouse-button
                 </td>
                 <td style={{ padding: "8px 16px" }}>Fire weapon</td>
               </tr>
@@ -197,7 +248,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Space
+                  Spacebar or right-mouse-button
                 </td>
                 <td style={{ padding: "8px 16px" }}>Open/Use</td>
               </tr>
@@ -215,7 +266,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Alt or RMB
+                  Alt (Windows) or Option (Mac) + arrow left/right
                 </td>
                 <td style={{ padding: "8px 16px" }}>Strafe</td>
               </tr>
@@ -232,7 +283,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Shift
+                  Shift + arrow
                 </td>
                 <td style={{ padding: "8px 16px" }}>Run</td>
               </tr>
@@ -292,6 +343,31 @@ export function HelpModalContent() {
           </table>
         </div>
       </section>
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
+          Using the mouse for moving player (instead of arrow keys)
+        </h3>
+        <ul className="list-disc pl-6 mb-6 space-y-3">
+          <li>
+            Click on the game window to lock the mouse, so it stays in the game
+            window.
+          </li>
+          <li>
+            Move movements now control the movement of the player, forward,
+            backward, left, right.
+          </li>
+          <li>Press Escape twice to unlock the mouse.</li>
+        </ul>
+      </section>
+    </>
+  );
+
+  return (
+    <div className="help-modal-content">
+      {showMobileHelp ? <MobileHelpContent /> : <DesktopHelpContent />}
     </div>
   );
 }
