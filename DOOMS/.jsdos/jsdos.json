@@ -271,7 +271,7 @@
         "title": "Layer#0",
         "controls": [
           {
-            "row": 4,
+            "row": 3,
             "column": 1,
             "symbol": "↑",
             "type": "Key",
@@ -280,7 +280,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 0,
             "symbol": "←",
             "type": "Key",
@@ -289,7 +289,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 2,
             "symbol": "→",
             "type": "Key",
@@ -298,7 +298,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 1,
             "symbol": "↓",
             "type": "Key",
@@ -307,7 +307,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 1,
             "type": "NippleActivator",
             "symbol": "◯"
@@ -356,7 +356,7 @@
             ]
           },
           {
-            "row": 4,
+            "row": 3,
             "column": 2,
             "symbol": "↑",
             "type": "Key",
@@ -366,7 +366,7 @@
             ]
           },
           {
-            "row": 4,
+            "row": 3,
             "column": 0,
             "symbol": "↑",
             "type": "Key",
@@ -376,7 +376,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 2,
             "symbol": "↓",
             "type": "Key",
@@ -386,7 +386,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 0,
             "symbol": "↓",
             "type": "Key",
@@ -499,7 +499,7 @@
             ]
           },
           {
-            "row": 4,
+            "row": 3,
             "column": 1,
             "symbol": "↑",
             "type": "Key",
@@ -508,7 +508,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 1,
             "symbol": "↓",
             "type": "Key",
@@ -517,7 +517,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 0,
             "symbol": "←",
             "type": "Key",
@@ -526,7 +526,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 2,
             "symbol": "→",
             "type": "Key",
@@ -535,7 +535,7 @@
             ]
           },
           {
-            "row": 5,
+            "row": 4,
             "column": 1,
             "type": "NippleActivator",
             "symbol": "◯"
@@ -559,7 +559,7 @@
             ]
           },
           {
-            "row": 4,
+            "row": 3,
             "column": 2,
             "symbol": "↑",
             "type": "Key",
@@ -569,7 +569,7 @@
             ]
           },
           {
-            "row": 4,
+            "row": 3,
             "column": 0,
             "symbol": "↑",
             "type": "Key",
@@ -579,7 +579,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 2,
             "symbol": "↓",
             "type": "Key",
@@ -589,7 +589,7 @@
             ]
           },
           {
-            "row": 6,
+            "row": 5,
             "column": 0,
             "symbol": "↓",
             "type": "Key",
