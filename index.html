@@ -162,24 +162,24 @@
           }, 500);
 
           // Also set a backup exit detector using visibilitychange
-          document.addEventListener("visibilitychange", function () {
-            if (
-              document.visibilityState === "hidden" &&
-              window.emulatorStarted
-            ) {
-              console.log(
-                "Document hidden after emulator started, possible exit"
-              );
-              setTimeout(() => {
-                if (document.visibilityState === "visible") {
-                  console.log("Tab is visible again, not exiting");
-                } else {
-                  console.log("Tab remained hidden, assuming program exit");
-                  safeShowExitMessage();
-                }
-              }, 1000);
-            }
-          });
+          // document.addEventListener("visibilitychange", function () {
+          //   if (
+          //     document.visibilityState === "hidden" &&
+          //     window.emulatorStarted
+          //   ) {
+          //     console.log(
+          //       "Document hidden after emulator started, possible exit"
+          //     );
+          //     setTimeout(() => {
+          //       if (document.visibilityState === "visible") {
+          //         console.log("Tab is visible again, not exiting");
+          //       } else {
+          //         console.log("Tab remained hidden, assuming program exit");
+          //         safeShowExitMessage();
+          //       }
+          //     }, 1000);
+          //   }
+          // });
         }
 
         // Simplified termination monitor
