@@ -16,6 +16,7 @@
         "--disable-cache",
         "--disk-cache-size=1",
         "--media-cache-size=1",
+        "--auto-open-devtools-for-tabs",
         "--user-data-dir=${workspaceFolder}/.vscode/chrome-debug-profile"
       ],
       "userDataDir": false,

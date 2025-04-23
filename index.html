@@ -64,31 +64,23 @@
         // Function to show exit message
         const showExitMessage = () => {
           console.log("SHOWING EXIT MESSAGE - Stack trace:", new Error().stack);
-          // Only show exit message if the emulator had started and was running
-          if (window.emulatorStarted && window.gameRunning) {
-            console.log("Showing exit message (emulator was running)");
-            document.getElementById("exit-message").style.display = "block";
+          document.getElementById("exit-message").style.display = "block";
 
-            // Stop the emulator properly if props exists
-            if (window.props && typeof window.props.stop === "function") {
-              try {
-                console.log("Stopping emulator with props.stop()");
-                window.props.stop();
-              } catch (e) {
-                console.log("Error stopping emulator:", e);
-              }
-            }
-
-            // Also try closing automatically, might work in some browsers
+          // Stop the emulator properly if props exists
+          if (window.props && typeof window.props.stop === "function") {
             try {
-              window.close();
+              console.log("Stopping emulator with props.stop()");
+              window.props.stop();
             } catch (e) {
-              console.log("Auto-close failed, message shown instead");
+              console.log("Error stopping emulator:", e);
             }
-          } else {
-            console.log(
-              "Exit message suppressed - emulator not fully started yet"
-            );
+          }
+
+          // Also try closing automatically, might work in some browsers
+          try {
+            window.close();
+          } catch (e) {
+            console.log("Auto-close failed, message shown instead");
           }
         };
 
@@ -201,119 +193,18 @@
           console.log("Initializing Dos...");
 
           const props = Dos(document.getElementById("app"), {
-            // url: "https://cdn.dos.zone/custom/dos/QB45.jsdos", // qbasic7
-            // url: decodeURIComponent("https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom_dm.jsdos"),
-            // url: decodeURIComponent("https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fhomm2_netbios.jsdos"),
-            // url: "https://cdn.dos.zone/original/2X/2/24b00b14f118580763440ecaddcc948f8cb94f14.jsdos", // digger
-            // url: "https://cdn.dos.zone/custom/dos/doom.jsdos",
-            // url: "https://cdn.dos.zone/custom/dos/duke3d_ipx.jsdos",
-            // url: "https://br.cdn.dos.zone/ipx/duke3d/duke3d_ipx.jsdos",
-            // url: "https://br.cdn.dos.zone/ipx/doom_dm/doom_dm.jsdos",
-            // url: "https://cdn.dos.zone/original/2X/b/b4b5275904d86a4ab8a20917b2b7e34f0df47bf7.jsdos", // dhry2
-            // url: "https://cdn.dos.zone/original/2X/7/744842062905f72648a4d492ccc2526d039b3702.jsdos", // sim-city
-            // url: "https://cdn.dos.zone/custom/dos/war2.jsdos", // warcraft-2
-            // url: "https://cdn.dos.zone/original/2X/5/5f21f221e023bbca253396824c5f652438eeef8c.jsdos", // поле чудес
-            // url: "https://cdn.dos.zone/custom/dos/homm_2.jsdos",
-            // dosboxConf: `
-            //   [autoexec]
-            //   mount c .
-            //   c:
-            // `,
-            // jsdosConf: {
-            //   "layersConfig": {
-            //     "version": 2,
-            //     "layers": [
-            //       {
-            //         "grid": "honeycomb",
-            //         "title": "Layer#0",
-            //         "controls": [
-            //           {
-            //             "row": 0,
-            //             "column": 0,
-            //             "symbol": "↑",
-            //             "type": "Key",
-            //             "mapTo": [
-            //               265
-            //             ]
-            //           }
-            //         ]
-            //       }
-            //     ]
-            //   }
-            // },
-            // dosboxConf: diabloConf,
-            // loginUrl: "http://localhost:8080/subscription.html",
             autoStart: true,
-            // kiosk: true,
-            // background: "https://dos.zone/images/http/original/2X/f/f833b147609640191342f555d70eb07261f53c03.png/0a94af564ab81a14a27d6a67671e5416.webp",
-
             url: `/doom.jsdos?v=${Date.now()}`, // Add timestamp to prevent caching
-
             pathPrefix: "/emulators/",
             backend: "dosboxX", // Set DOSBox-X as the backend
             ipxBackend: params.get("ipxBackend"),
             room: params.get("room"),
             autoplay: true, // Enable audio autoplay
-            // ipx: [{
-            //     name: "my-ipx-server",
-            //     host: "wss://some.url",
-            //   }, {
-            //     name: "dos.zone",
-            //     host: "wss://netherlands.dos.zone",
-            //   }
-            // ],
-            // backendHardware: (backend) => {
-            //  console.log("Hardware backend for", backend);
-            //  return Promise.resolve("ws://127.0.0.1:8888");
-            // },
-            // backendHardware: window.backendHardware,
-            // sockdriveBackend: {
-            //   name: "makevm",
-            //   host: "backend.make-vm.com:8001",
-            // },
             noNetworking: true,
             noCloud: true,
             cloudSaves: false,
             mouseSensitivity: 0.7,
-
-            // noCursor: true,
-            // softKeyboardLayout: [
-            //   "q w e r t",
-            //   "{up} {down}",
-            //   "{left} {right}",
-            //   "{symbols}"
-            // ],
-            // softKeyboardSymbols: [
-            //   {
-            //       "{up}": "↑",
-            //       "{down}": "↓",
-            //       "{left}": "←",
-            //       "{right}": "→",
-            //   },
-            //   {
-            //       "{up}": "↑",
-            //       "{down}": "↓",
-            //       "{left}": "←",
-            //       "{right}": "→",
-            //       "q": "й", "w": "ц", "e": "у", "r": "к", "t": "е",
-            //   },
-            // ],
-            // softKeyboardLayout: [
-            //   [
-            //     [
-            //       "{up}",
-            //     ],
-            //     [
-            //       "{left} {right}",
-            //     ],
-            //     [
-            //       "{down}",
-            //     ]
-            //   ],
-            // ],
-            // softFullscreen: true,
             softkeyboardlayout: [[["{layout} {up}"]], [["{layout} {down}"]]],
-            // key: "-----",
             onEvent: (event, arg) => {
               // Log every event for debugging
               console.log("EVENT RECEIVED:", event, arg);
