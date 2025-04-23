@@ -356,10 +356,14 @@ export function HelpModalContent() {
             window.
           </li>
           <li>
-            Move movements now control the movement of the player, forward,
+            Mouse movements now control the movement of the player, forward,
             backward, left, right.
           </li>
           <li>Press Escape twice to unlock the mouse.</li>
+          <li>
+            Note that keyboard arrows will still work when mouse is locked, in
+            case you are kind of a spaz.
+          </li>
         </ul>
       </section>
     </>

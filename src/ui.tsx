@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "preact/hooks";
+import { createContext } from "preact";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuButton } from "./sidebar/menu-button";
 import { State } from "./store";
@@ -8,10 +9,84 @@ import { useT } from "./i18n";
 import { Modal } from "./components/modal";
 import { HelpModalContent } from "./components/help-modal";
 import { SettingsModalContent } from "./components/settings-modal";
+import clippyImage from "./public/images/help/clippy.webp";
 
 export interface ModalState {
   isHelpOpen: boolean;
   isSettingsOpen: boolean;
+}
+
+// Create context for clippy visibility
+export const ClippyContext = createContext({
+  isClippyVisible: true,
+  hideClippy: () => {},
+});
+
+// Clippy helper component to guide users to the help menu
+interface ClippyHelperProps {
+  isVisible: boolean;
+  onDismiss: () => void;
+}
+
+function ClippyHelper({ isVisible, onDismiss }: ClippyHelperProps) {
+  useEffect(() => {
+    // Auto-hide after 20 seconds
+    const timer = setTimeout(() => {
+      onDismiss();
+    }, 20000);
+
+    return () => clearTimeout(timer);
+  }, [onDismiss]);
+
+  // Dismiss Clippy when clicked
+  const handleDismiss = () => {
+    onDismiss();
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div
+      className="fixed z-[10000] bottom-14 left-14"
+      onClick={handleDismiss}
+      style={{
+        cursor: "pointer",
+      }}
+    >
+      {/* Classic Office assistant speech bubble */}
+      <div
+        className="relative mb-2 p-3 bg-white rounded-lg shadow-lg"
+        style={{
+          maxWidth: "220px",
+          border: "1px solid #888",
+          background: "linear-gradient(to bottom, #fffceb, #fffefd)",
+        }}
+      >
+        <p className="text-black text-sm font-medium">
+          Click <b>Start→Help</b> to learn how to play!
+        </p>
+      </div>
+
+      {/* Clippy image with rocking animation */}
+      <img
+        src={clippyImage}
+        alt="Clippy helper"
+        className="w-20 h-20 object-contain"
+        style={{
+          animation: "rockingMotion 2.5s ease-in-out infinite",
+          transformOrigin: "bottom center",
+        }}
+      />
+
+      <style>{`
+        @keyframes rockingMotion {
+          0% { transform: rotate(-3deg); }
+          50% { transform: rotate(3deg); }
+          100% { transform: rotate(-3deg); }
+        }
+      `}</style>
+    </div>
+  );
 }
 
 let currentWideScreen = uiSlice.getInitialState().wideScreen;
@@ -20,6 +95,10 @@ export function Ui() {
   const hidden = useSelector((state: State) => state.ui.hidden);
   const theme = useSelector((state: State) => state.ui.theme);
   const dispatch = useDispatch();
+
+  // Clippy visibility state
+  const [clippyVisible, setClippyVisible] = useState(true);
+  const hideClippy = () => setClippyVisible(false);
 
   // Modal state
   const [modalState, setModalState] = useState<ModalState>({
@@ -85,31 +164,36 @@ export function Ui() {
   }
 
   return (
-    <div ref={rootRef} class="w-full h-full relative" data-theme={theme}>
-      <Window />
-      <MenuButton />
-      <Toast />
-      <UpdateWsWarning />
+    <ClippyContext.Provider
+      value={{ isClippyVisible: clippyVisible, hideClippy }}
+    >
+      <div ref={rootRef} class="w-full h-full relative" data-theme={theme}>
+        <Window />
+        <MenuButton />
+        <ClippyHelper isVisible={clippyVisible} onDismiss={hideClippy} />
+        <Toast />
+        <UpdateWsWarning />
 
-      {/* Modals */}
-      <Modal
-        isOpen={modalState.isHelpOpen}
-        onClose={closeHelpModal}
-        title="Help"
-        width="700px"
-      >
-        <HelpModalContent />
-      </Modal>
+        {/* Modals */}
+        <Modal
+          isOpen={modalState.isHelpOpen}
+          onClose={closeHelpModal}
+          title="Help"
+          width="700px"
+        >
+          <HelpModalContent />
+        </Modal>
 
-      <Modal
-        isOpen={modalState.isSettingsOpen}
-        onClose={closeSettingsModal}
-        title="Settings"
-        width="500px"
-      >
-        <SettingsModalContent />
-      </Modal>
-    </div>
+        <Modal
+          isOpen={modalState.isSettingsOpen}
+          onClose={closeSettingsModal}
+          title="Settings"
+          width="500px"
+        >
+          <SettingsModalContent />
+        </Modal>
+      </div>
+    </ClippyContext.Provider>
   );
 }
 

@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from "preact/hooks";
+import { useState, useEffect, useRef, useContext } from "preact/hooks";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { State, Store } from "../store";
 import { uiSlice } from "../store/ui";
 import { browserSetFullScreen } from "../host/fullscreen";
+import { ClippyContext } from "../ui";
 import "./menu.css";
 
 // Define interface for MenuButton props
@@ -77,6 +78,7 @@ export function MenuButton({ onClick, isActive }: MenuButtonProps = {}) {
   const dispatch = useDispatch();
   const store = useStore() as Store;
   const fullScreen = useSelector((state: State) => state.ui.fullScreen);
+  const { hideClippy } = useContext(ClippyContext);
 
   // Update menuOpen state when isActive prop changes
   useEffect(() => {
@@ -138,6 +140,9 @@ export function MenuButton({ onClick, isActive }: MenuButtonProps = {}) {
   const toggleMenu = () => {
     const newState = !menuOpen;
     setMenuOpen(newState);
+
+    // Hide clippy when menu is toggled
+    hideClippy();
 
     // Call provided onClick handler if available
     if (onClick) {
