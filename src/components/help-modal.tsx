@@ -117,6 +117,10 @@ export function HelpModalContent() {
         >
           Keyboard Controls
         </h3>
+        These are the default controls unless you remap them in options -&gt;
+        setup -&gt; key bindings.
+        <br />
+        <br />
         <div className="overflow-x-auto">
           <table
             style={{
@@ -161,7 +165,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  arrow up ↑
+                  arrow up (↑)
                 </td>
                 <td style={{ padding: "8px 16px" }}>Move forward</td>
               </tr>
@@ -178,7 +182,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  arrow down ↓
+                  arrow down (↓)
                 </td>
                 <td style={{ padding: "8px 16px" }}>Move backward</td>
               </tr>
@@ -196,7 +200,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  arrow left ←
+                  arrow left (←)
                 </td>
                 <td style={{ padding: "8px 16px" }}>Turn left</td>
               </tr>
@@ -213,7 +217,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  arrow right →
+                  arrow right (→)
                 </td>
                 <td style={{ padding: "8px 16px" }}>Turn right</td>
               </tr>
@@ -231,7 +235,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Ctrl or left-mouse-button
+                  'z' or left-mouse-button
                 </td>
                 <td style={{ padding: "8px 16px" }}>Fire weapon</td>
               </tr>
@@ -283,7 +287,7 @@ export function HelpModalContent() {
                     borderRight: "1px solid rgba(100,149,237,0.6)",
                   }}
                 >
-                  Shift + arrow
+                  Shift + arrow keys
                 </td>
                 <td style={{ padding: "8px 16px" }}>Run</td>
               </tr>

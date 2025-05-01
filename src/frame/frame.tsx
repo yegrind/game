@@ -7,26 +7,30 @@ import { NetworkFrame } from "./network-frame";
 import { SettingsFrame } from "./settings-frame";
 import { StatsFrame } from "./stats-frame";
 import { PreRunFrame } from "./prerun-frame";
-import { HelpFrame } from "./help-frame";
 
 export function Frame(props: {}) {
-    const frame = useSelector((state: State) => state.ui.frame);
-    const frameXs = useSelector((state: State) => state.ui.frameXs);
-    const wideScreen = useSelector((state: State) => state.ui.wideScreen);
-    if (frame === "none") {
-        return null;
-    }
+  const frame = useSelector((state: State) => state.ui.frame);
+  const frameXs = useSelector((state: State) => state.ui.frameXs);
+  const wideScreen = useSelector((state: State) => state.ui.wideScreen);
+  if (frame === "none") {
+    return null;
+  }
 
-
-    return <div class={"frame " + (frameXs ? " frame-xs " : "") +
-        (frameXs || wideScreen ? "" : " frame-md")}>
-        { frame === "settings" && <SettingsFrame /> }
-        { frame === "editor-conf" && <EditorConf /> }
-        { frame === "editor-fs" && <EditorFsFrame /> }
-        { frame === "network" && <NetworkFrame /> }
-        { frame === "stats" && <StatsFrame /> }
-        { frame === "fat-drives" && <FatDrivesFrame /> }
-        { frame === "prerun" && <PreRunFrame /> }
-        { frame === "help" && <HelpFrame /> }
-    </div>;
-};
+  return (
+    <div
+      class={
+        "frame " +
+        (frameXs ? " frame-xs " : "") +
+        (frameXs || wideScreen ? "" : " frame-md")
+      }
+    >
+      {frame === "settings" && <SettingsFrame />}
+      {frame === "editor-conf" && <EditorConf />}
+      {frame === "editor-fs" && <EditorFsFrame />}
+      {frame === "network" && <NetworkFrame />}
+      {frame === "stats" && <StatsFrame />}
+      {frame === "fat-drives" && <FatDrivesFrame />}
+      {frame === "prerun" && <PreRunFrame />}
+    </div>
+  );
+}

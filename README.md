@@ -1,25 +1,24 @@
 # Ye's Grind
 
-A heavily customized project based on [js-dos](https://github.com/caiiiycuk/js-dos), designed to deliver a retro DOS gaming experience running a custom DOOM-based engine with personalized content.
+This repository contains a modified version of retro (90's era DOS) DOOM that I’m currently developing. This repository is used for staging an image for web hosting purposes. It is marked as public to comply with software licensing requirements.
 
-## 🚀 Features
-- Custom integration of a modified DOOM engine (`DOOM.EXE`) executed via js-dos.
-- Includes a Freedoom-based WAD file tailored for this project.
-- Prototype-level implementation focused on my specific use case.
-- Expect rough edges — this is a work in progress, evolving step by step.
+## Features
+- Integration of a modified DOOM engine (`DOOM.EXE`) and Freedoom-based WAD file tailored for this project.
+- A modified version of [js-dos](https://github.com/caiiiycuk/js-dos) specifically for my use case.
+- I don't suggest forking this project. If you want to get started with running DOS games in a browser, use a fresh clone of [js-dos](https://github.com/caiiiycuk/js-dos) as my changes are very use case specific. js-dos plays many retro DOS games out of the box beautifully with no modifications needed!
 
 ## 🎓 Credits
-- Core web-based DOS emulation powered by [js-dos](https://github.com/caiiiycuk/js-dos) by **caiiiycuk** (MIT License).
+- Core web-based DOS emulation powered by [js-dos](https://github.com/caiiiycuk/js-dos) (MIT License).
 - `DOOM.EXE` is a customized build based on:
-  - The original **DOOM Source Code** by id Software (GPL v2.0)
-  - **MBF (Marine's Best Friend)** by Lee Killough
-  - **mbf_sigil** by Sakitoshi
-- Game assets are derived from the [**Freedoom** project](https://freedoom.github.io/) (CC0 / BSD Licenses).
+  - The original DOOM Source Code by id Software (GPL v2.0)
+  - MBF (Marine's Best Friend) by Killough
+  - mbf_sigil by Sakitoshi
+- Base assets are from the [Freedoom project](https://freedoom.github.io/) (CC0 / BSD Licenses).
+- Custom assets were generated almost entirely by [OpenAI's Sora](https://openai.com/sora/). Some of them took many iterations. Tech tip: swearing at Sora does not help, I tried.
+- Custom DOOM wad file was assembled using [Slade3](https://slade.mancubus.net).
 
 ## 📂 Source Code for DOOM.EXE
-In compliance with the GNU General Public License v2.0, the full source code used to build the included `DOOM.EXE` is publicly available here:
-
-👉 [https://github.com/dicksoftware/kq-mbf](https://github.com/dicksoftware/kq-mbf)
+In compliance with the GNU General Public License v2.0, the full source code used to build the included `DOOM.EXE` is publicly available at [https://github.com/eggplant-software/kq-mbf](https://github.com/eggplant-software/kq-mbf).
 
 ## 📄 License
 - The code in this repository is licensed under the [MIT License](./LICENSE).
@@ -34,7 +33,3 @@ This is an independent, heavily modified project. It is **not affiliated with or
 - The Freedoom team
 - Sakitoshi or MBF contributors
 
-## 🙌 Acknowledgments
-- Huge thanks to **caiiiycuk** for js-dos — making DOS apps accessible on the web!
-- Shoutout to the **Freedoom** team for providing open game assets.
-- Respect to the legacy of **id Software**, **MBF**, and all contributors in the DOOM community.

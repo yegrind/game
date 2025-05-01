@@ -1,3 +1,4 @@
+rm ./doom.jsdos
 cd DOOMS
 zip -r ./doom.jsdos .
 mv ./doom.jsdos ../doom.jsdos
