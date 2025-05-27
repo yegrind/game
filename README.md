@@ -2,6 +2,10 @@
 
 This repository contains a modified version of retro (90's era DOS) DOOM that I’m currently developing. This repository is used for staging an image for web hosting purposes. It is marked as public to comply with software licensing requirements.
 
+Find me on x.com at [@Ye_Grind](https://x.com/Ye_Grind).
+
+See this game in action at [https://yegrind.rodeo](https://yegrind.rodeo).
+
 ## Features
 - Integration of a modified DOOM engine (`DOOM.EXE`) and Freedoom-based WAD file tailored for this project.
 - A modified version of [js-dos](https://github.com/caiiiycuk/js-dos) specifically for my use case.
