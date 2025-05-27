@@ -18,7 +18,7 @@ This repository contains a modified version of retro (90's era DOS) DOOM that I�
 - Custom DOOM wad file was assembled using [Slade3](https://slade.mancubus.net).
 
 ## 📂 Source Code for DOOM.EXE
-In compliance with the GNU General Public License v2.0, the full source code used to build the included `DOOM.EXE` is publicly available at [https://github.com/eggplant-software/kq-mbf](https://github.com/eggplant-software/kq-mbf).
+In compliance with the GNU General Public License v2.0, the full source code used to build the included `DOOM.EXE` is publicly available at [https://github.com/yegrind/ye-doom](https://github.com/yegrind/ye-doom).
 
 ## 📄 License
 - The code in this repository is licensed under the [MIT License](./LICENSE).
