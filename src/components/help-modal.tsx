@@ -115,6 +115,82 @@ export function HelpModalContent() {
           className="text-xl font-semibold mb-4"
           style={{ color: "hsl(var(--p, #570df8))" }}
         >
+          Cheat codes
+        </h3>
+        Unlock the ultimate edge with these slick shortcuts, because why grind when you can flex?
+        <br />
+        <br />
+        <div className="overflow-x-auto">
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              border: "1px solid rgba(100,149,237,0.6)",
+            }}
+          >
+            <thead>
+              <tr
+                style={{
+                  borderBottom: "1px solid rgba(100,149,237,0.6)",
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                }}
+              >
+                <th
+                  style={{
+                    padding: "10px 16px",
+                    textAlign: "left",
+                    borderRight: "1px solid rgba(100,149,237,0.6)",
+                  }}
+                >
+                  Cheat Code
+                </th>
+                <th style={{ padding: "10px 16px", textAlign: "left" }}>
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                style={{
+                  borderBottom: "1px solid rgba(100,149,237,0.6)",
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                }}
+              >
+                <td
+                  style={{
+                    padding: "8px 16px",
+                    fontFamily: "monospace",
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                    borderRight: "1px solid rgba(100,149,237,0.6)",
+                  }}
+                >
+                  idkfa
+                </td>
+                <td style={{ padding: "8px 16px" }}>All weapons, ammo, keys and full armor</td>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    padding: "8px 16px",
+                    fontFamily: "monospace",
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                    borderRight: "1px solid rgba(100,149,237,0.6)",
+                  }}
+                >
+                  iddqd
+                </td>
+                <td style={{ padding: "8px 16px" }}>God mode - makes you invincible</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="mt-6">
+        <h3
+          className="text-xl font-semibold mb-4"
+          style={{ color: "hsl(var(--p, #570df8))" }}
+        >
           Keyboard Controls
         </h3>
         These are the default controls unless you remap them in options -&gt;
